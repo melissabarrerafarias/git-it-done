@@ -28,14 +28,30 @@ var getUserRepos = function (user) {
     var apiUrl = "https://api.github.com/users/" + user + "/repos";
 
     fetch(apiUrl).then(function (response) {
-        response.json().then(function (data) {
-            displayRepos(data, user);
-        });
+        // handles potential errors if user searches for non-existent username
+        if (response.ok) {
+            response.json().then(function (data) {
+                displayRepos(data, user);
+            });
+        } 
+        else {
+            alert("Error: " + response.statusText);
+        }
+    })
+    .catch(function(error) {
+        // Notice this `.catch()` getting chained onto the end of the `.then()` method
+        alert("Unable to connect to Github");
     });
 };
 
 
 var displayRepos = function (repos, searchTerm) {
+    // check if api returned any repos
+    if (repos.length === 0) {
+        repoContainerEl.textContent = "No repositories found.";
+        return;
+    }
+
     // clear old content
     repoContainerEl.textContent = "";
     // display search name 
@@ -182,3 +198,15 @@ userFormEl.addEventListener("submit", formSubmitHandler);
 
 // In the for loop, we're taking each repository (repos [i]) and writing some of its data to the page. First we format the appearance of the name and repository name. Next we create
 // and style a <div> element. Then we create a <span> to hold the formatted repository name. We add that to the <div> we created and add the entire <div> to the container on the HTML. 
+
+
+
+// 404, 200, and 500 statuses
+// A status code in the 200's means that the HTTP request was successful. Any status code in the 400's indicates that the server received the HTTP request but there's an issue with how
+// we made the request, such as missing information. Status codes in the 500's indicate an error with the server we're making a request to or the lack of an internet connection 
+// to make the request.
+
+
+
+// The .catch() method is the Fetch API's way of handling network errors. When we use the fetch() to create a request, the request might go one of two wways: the request may find its
+// destination URL and attempt to get the data in question, which would get returned into the .then() method; or if the request fails, that error will be sent to the .catch() method.
