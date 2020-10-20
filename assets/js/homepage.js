@@ -219,3 +219,16 @@ userFormEl.addEventListener("submit", formSubmitHandler);
 // query parameters - strings appended to the end of URL's - to define actions, pass information, or specify content to the webpage or API endpoint. The ? symbol at the end of the URL
 // identifies the parameters. They are assigned valuess in a "key=value" format. ex: https://www.google.com/search?q=javascript. "www.google.com/search" being the URL and "q=javascript"
 // being the query parameter.
+
+
+
+
+// Location Web API
+// to see, in the console do "document.location". It contains a few methods and properties that hold information about the URL of the webpage. We want the property called "search"
+// because it contains the query string. 
+
+
+
+
+// the split() method splits a string into an array of substrings and returns the new array. EX: var string = "Hello World"; string.split("o");
+// if an empty string ("") is used as the separator, the string is split between each character. 
