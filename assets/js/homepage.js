@@ -65,8 +65,10 @@ var displayRepos = function (repos, searchTerm) {
         var repoName = repos[i].owner.login + "/" + repos[i].name;
 
         //create a container for each repo
-        var repoEl =  document.createElement("div");
+        var repoEl =  document.createElement("a");
         repoEl.classList = "list-item flex-row justify-space-between align-center";
+        // this is linking to the single-repo.hmtl so when you click on a repo, itll take you to the open issues
+        repoEl.setAttribute("href", "./single-repo.html?repo=" + repoName);
 
         // create a span element to hold repository name 
         var titleEl = document.createElement("span");
@@ -210,3 +212,10 @@ userFormEl.addEventListener("submit", formSubmitHandler);
 
 // The .catch() method is the Fetch API's way of handling network errors. When we use the fetch() to create a request, the request might go one of two wways: the request may find its
 // destination URL and attempt to get the data in question, which would get returned into the .then() method; or if the request fails, that error will be sent to the .catch() method.
+
+
+
+
+// query parameters - strings appended to the end of URL's - to define actions, pass information, or specify content to the webpage or API endpoint. The ? symbol at the end of the URL
+// identifies the parameters. They are assigned valuess in a "key=value" format. ex: https://www.google.com/search?q=javascript. "www.google.com/search" being the URL and "q=javascript"
+// being the query parameter.
