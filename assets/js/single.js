@@ -5,8 +5,15 @@ var repoNameEl = document.querySelector("#repo-name");
 var getRepoName = function() {
     var queryString = document.location.search;
     var repoName = queryString.split("=")[1];
+
+    // this will only display the repo name and make the fetch call if the value for repoName
+    if (repoName) {
+    repoNameEl.textContent = repoName; // displays repo name on the page
     getRepoIssues(repoName);
-    repoNameEl.textContent = repoName;
+    }
+    else {
+        document.location.replace("./index.html"); // if not repo was given, redirects to homepage
+    }
 }
 
 var getRepoIssues = function(repo) {
@@ -134,3 +141,9 @@ getRepoName();
 // This will loop over the response data and create an <a> element for each issue. Similar to what we did in homepage.js, the biggest difference being the data we're working with.
 // Issue objects have an html_url property, which links to the full issue on GitHub. We also added a target="_blank" attribute to each <a> element, to open the link in a new tab instead
 // of replacing the current webpage. 
+
+
+
+
+// The replace() method replaces the current resoruce or page with the one at the provided URL. ex : document.location.replace("https://google.com/search?q=javascript"); this will
+// automatically take you to that page. 
