@@ -4,6 +4,8 @@ var nameInputEl = document.querySelector("#username");
 // variables to reference the <span> ("#repo-search-term") and empty <div> ("#repos-container")
 var repoSearchTerm = document.querySelector("#repo-search-term");
 var repoContainerEl = document.querySelector("#repos-container");
+// variable that references the language buttons 
+var languageButtonsEl = document.querySelector("#language-buttons");
 
 // this function will be executed upon a form submission browser event
 var formSubmitHandler = function (event) {
@@ -101,8 +103,36 @@ var displayRepos = function (repos, searchTerm) {
     console.log(searchTerm);
 }
 
+getFeaturedRepos = function(language) {
+    var apiUrl = "https://api.github.com/search/repositories?q=" + language + "+is:featured&sort=help-wanted-issues";
+
+    fetch(apiUrl).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                displayRepos(data.items, language);
+            })
+        }
+        else {
+            alert("Eroor: " + response.statusText);
+        }
+    });
+};
+
+// the browser's event object will have a target property that tells us exactly which HTML element was interacted with to create the event
+// and once we know which element was interacted with, we can use the getAttribute() method to read the data-language attribute's value
+var buttonClickHandler = function(event) {
+    var language = event.target.getAttribute("data-language");
+    if (language) {
+        getFeaturedRepos(language);
+
+        // clear old content 
+        repoContainerEl.textContent = "";
+    }
+};
+
 
 userFormEl.addEventListener("submit", formSubmitHandler);
+languageButtonsEl.addEventListener("click", buttonClickHandler);
 
 
 // fetch("https://api.github.com/users/octocat/repos").then(function(response) {
